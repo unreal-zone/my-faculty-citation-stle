@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="expanded" default-locale="en-US">
+  <info>
+    <title>Faculty Author-Date Style</title>
+    <id>http://www.zotero.org/styles/faculty-author-date-custom</id>
+    <link href="http://www.zotero.org/styles/faculty-author-date-custom" rel="self"/>
+    <link href="http://www.zotero.org/styles/begell-house-apa" rel="template"/>
+    <category citation-format="author-date"/>
+    <summary>Custom faculty author-date style: Indonesian "dan" for two authors, italic et al., compact bibliography initials, journal volume(issue): pages.</summary>
+    <updated>2026-05-19T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <locale xml:lang="en">
+    <terms>
+      <term name="and">dan</term>
+      <term name="and" form="symbol">dan</term>
+      <term name="no date" form="short">n.d.</term>
+    </terms>
+  </locale>
+
+  <macro name="author-intext">
+    <names variable="author">
+      <name form="short" and="text" delimiter=", " delimiter-precedes-last="never"/>
+      <et-al font-style="italic"/>
+      <substitute>
+        <names variable="editor">
+          <name form="short" and="text" delimiter=", " delimiter-precedes-last="never"/>
+          <et-al font-style="italic"/>
+        </names>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+        <text variable="year-suffix"/>
+      </if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="author-bib">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=" " initialize-with="" delimiter=", " delimiter-precedes-last="never"/>
+      <substitute>
+        <names variable="editor">
+          <name name-as-sort-order="all" sort-separator=" " initialize-with="" delimiter=", " delimiter-precedes-last="never"/>
+        </names>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+
+  <macro name="container-journal">
+    <group delimiter=" ">
+      <text variable="container-title"/>
+      <group>
+        <text variable="volume"/>
+        <text variable="issue" prefix="(" suffix=")"/>
+      </group>
+    </group>
+  </macro>
+
+  <macro name="pages">
+    <text variable="page"/>
+  </macro>
+
+  <macro name="article-journal-bib">
+    <group delimiter=". " suffix=".">
+      <text macro="author-bib"/>
+      <text macro="year"/>
+      <text macro="title"/>
+      <group delimiter=": ">
+        <text macro="container-journal"/>
+        <text macro="pages"/>
+      </group>
+    </group>
+  </macro>
+
+  <macro name="generic-bib">
+    <group delimiter=". " suffix=".">
+      <text macro="author-bib"/>
+      <text macro="year"/>
+      <text macro="title"/>
+      <choose>
+        <if variable="container-title">
+          <text variable="container-title"/>
+        </if>
+      </choose>
+      <choose>
+        <if variable="publisher">
+          <text variable="publisher"/>
+        </if>
+      </choose>
+    </group>
+  </macro>
+
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" collapse="year">
+    <sort>
+      <key macro="author-intext"/>
+      <key macro="year"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author-intext"/>
+        <text macro="year"/>
+        <text variable="locator"/>
+      </group>
+    </layout>
+  </citation>
+
+  <bibliography hanging-indent="false" entry-spacing="0" line-spacing="1">
+    <sort>
+      <key macro="author-bib"/>
+      <key macro="year"/>
+      <key macro="title"/>
+    </sort>
+    <layout>
+      <choose>
+        <if type="article-journal">
+          <text macro="article-journal-bib"/>
+        </if>
+        <else>
+          <text macro="generic-bib"/>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
